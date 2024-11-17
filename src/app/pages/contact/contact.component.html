@@ -1,25 +1,64 @@
 <div class="container py-5" id="contact">
   <h2 class="text-center display-4 fw-bold text-primary mb-4">Contact Me</h2>
-  <form>
+  <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
     <!-- Name Field -->
     <div class="form-group mb-4">
-      <label for="name" class="h5 text-primary">Your Name</label>
-      <input type="text" class="form-control" id="name" placeholder="Enter your name" required>
+      <label for="name" class="h5 text-primary">Name</label>
+      <input
+        type="text"
+        id="name"
+        class="form-control"
+        formControlName="name"
+        placeholder="Enter your name"
+      />
+      <div
+        *ngIf="contactForm.get('name')?.touched && contactForm.get('name')?.invalid"
+        class="text-danger mt-2"
+      >
+        <small *ngIf="contactForm.get('name')?.hasError('required')">Name is required.</small>
+        <small *ngIf="contactForm.get('name')?.hasError('minlength')">Name must be at least 3 characters long.</small>
+      </div>
     </div>
 
     <!-- Email Field -->
     <div class="form-group mb-4">
       <label for="email" class="h5 text-primary">Email Address</label>
-      <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+      <input
+        type="email"
+        id="email"
+        class="form-control"
+        formControlName="email"
+        placeholder="Enter your email"
+      />
+      <div
+        *ngIf="contactForm.get('email')?.touched && contactForm.get('email')?.invalid"
+        class="text-danger mt-2"
+      >
+        <small *ngIf="contactForm.get('email')?.hasError('required')">Email is required.</small>
+        <small *ngIf="contactForm.get('email')?.hasError('email')">Please enter a valid email address.</small>
+      </div>
     </div>
 
     <!-- Message Field -->
     <div class="form-group mb-4">
       <label for="message" class="h5 text-primary">Message</label>
-      <textarea class="form-control" id="message" rows="4" placeholder="Your message" required></textarea>
+      <textarea
+        id="message"
+        rows="4"
+        class="form-control"
+        formControlName="message"
+        placeholder="Your message"
+      ></textarea>
+      <div
+        *ngIf="contactForm.get('message')?.touched && contactForm.get('message')?.invalid"
+        class="text-danger mt-2"
+      >
+        <small *ngIf="contactForm.get('message')?.hasError('required')">Message is required.</small>
+        <small *ngIf="contactForm.get('message')?.hasError('minlength')">Message must be at least 10 characters long.</small>
+      </div>
     </div>
 
     <!-- Submit Button -->
-    <button type="submit" class="btn btn-primary btn-lg w-100">Submit</button>
+    <button type="submit" class="btn btn-primary btn-lg w-100" [disabled]="contactForm.invalid">Submit</button>
   </form>
 </div>
